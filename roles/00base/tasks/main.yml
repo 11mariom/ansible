@@ -1,0 +1,15 @@
+---
+- name: Create user mariom
+  user: name=mariom 
+        shell=/bin/bash
+        group=sudo
+        append=yes
+        state=present
+
+- name: Add ssh key
+  authorized_key: 
+        user=mariom
+        key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Create bashrc
+  copy: src=bashrc dest=/home/mariom/.bashrc
